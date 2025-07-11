@@ -299,32 +299,6 @@ namespace study_ia_web_app.Controllers
             }
         }
 
-        // VOZ A TEXT
-        [HttpPost("transcribir-respuesta")]
-        public async Task<IActionResult> TranscribirVoz([FromForm] IFormFile audioFile)
-        {
-            try
-            {
-                if (audioFile == null || audioFile.Length == 0)
-                    return BadRequest(new { mensaje = "No se recibió el archivo de audio." });
-
-                var texto = await _aiService.TranscribirAudioAsync(audioFile);
-
-                return Ok(new
-                {
-                    transcripcion = texto
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    mensaje = "Error al transcribir el audio",
-                    error = ex.Message
-                });
-            }
-        }
-
         // preguntar
         [HttpPost("evaluar-feedback")]
         public async Task<IActionResult> EvaluarFeedback([FromBody] EvaluarRespuestaRequest request)
